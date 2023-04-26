@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(uuid())
+  name          String
+  email         String   @unique
+  cep           String
+  address       String
+  whatsapp      String
+  password_hash String
+  created_at    DateTime @default(now())
+
+  pet Pet[]
+
+  @@map("users")
+}
+
+enum AgeType {
+  PUPPY
+  ADULT
+  WISE
+}
+
+enum SizeType {
+  SMALL
+  MEDIUM
+  LARGE
+}
+
+enum SelfSupportType {
+  SMALL
+  MEDIUM
+  LARGE
+}
+
+model Pet {
+  id           String          @id @default(uuid())
+  created_at   DateTime        @default(now())
+  validated_at DateTime?
+  user         User            @relation(fields: [user_id], references: [id])
+  user_id      String
+  name         String
+  description  String
+  age          AgeType
+  size         SizeType
+  self_support SelfSupportType
+
+  @@map("pets")
+}
