@@ -4,7 +4,7 @@ import { createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-
 import request from 'supertest'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 
-describe('Search a unique pet (e2e)', () => {
+describe('Search pets (e2e)', () => {
   beforeAll(async () => {
     await app.ready()
   })
@@ -16,7 +16,18 @@ describe('Search a unique pet (e2e)', () => {
   it('should be able to search a pet', async () => {
     const { user_id } = await createAndAuthenticateUser(app)
 
-    const pet = await prisma.pet.create({
+    await prisma.pet.create({
+      data: {
+        user_id,
+        name: 'Pepe',
+        description: 'Essa não para',
+        age: 'ADULT',
+        size: 'MEDIUM',
+        self_support: 'MEDIUM',
+      },
+    })
+
+    await prisma.pet.create({
       data: {
         user_id,
         name: 'Fuji',
@@ -27,7 +38,23 @@ describe('Search a unique pet (e2e)', () => {
       },
     })
 
-    const response = await request(app.server).get(`/pet/${pet.id}`).send()
+    await prisma.pet.create({
+      data: {
+        user_id,
+        name: 'Luna',
+        description: 'Essa não para',
+        age: 'WISE',
+        size: 'LARGE',
+        self_support: 'LARGE',
+      },
+    })
+
+    const city = 'São Paulo'
+
+    const response = await request(app.server)
+      .get(`/pets/${city}`)
+      .query({ age: 'WISE', size: 'LARGE', self_support: 'LARGE' })
+      .send()
 
     expect(response.statusCode).toEqual(200)
   })

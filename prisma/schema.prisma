@@ -15,6 +15,7 @@ model User {
   name          String
   email         String   @unique
   cep           String
+  city          String
   address       String
   whatsapp      String
   password_hash String

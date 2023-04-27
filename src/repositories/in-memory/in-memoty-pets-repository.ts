@@ -1,8 +1,11 @@
 import { Prisma, Pet } from '@prisma/client'
-import { PetRepository } from '../pets-repository'
+import { PetRepository, SearchParams } from '../pets-repository'
 import { randomUUID } from 'crypto'
+import { InMemoryUsersRepository } from './in-memory-users-repository'
 
 export class InMemoryPetsRepository implements PetRepository {
+  constructor(private userRepository: InMemoryUsersRepository) {}
+
   public items: Pet[] = []
 
   async create(data: Prisma.PetUncheckedCreateInput) {
@@ -31,5 +34,28 @@ export class InMemoryPetsRepository implements PetRepository {
     }
 
     return pet
+  }
+
+  async findPets(searchParams: SearchParams) {
+    const users = await this.userRepository.findByCity(searchParams.city)
+
+    const petsByCity = this.items.filter((pet) => {
+      return users.find((user) => user.id === pet.user_id)
+    })
+
+    const { age, self_support, size } = searchParams
+
+    if (!age && !self_support && !size) {
+      return petsByCity
+    }
+
+    const petFilter = petsByCity.filter(
+      (item) =>
+        item.age === age ||
+        item.self_support === self_support ||
+        item.size === size,
+    )
+
+    return petFilter
   }
 }

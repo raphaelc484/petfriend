@@ -16,6 +16,7 @@ describe('Authenticate (e2e)', () => {
       name: 'John Doe',
       email: 'johndoe@example.com',
       cep: '00000000',
+      city: 'São Paulo',
       address: 'Av. Nowhere',
       whatsapp: '21999999999',
       password: '123456',

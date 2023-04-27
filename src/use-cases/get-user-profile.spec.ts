@@ -17,6 +17,7 @@ describe('Get user profile use case', () => {
       name: 'John Doe',
       email: 'johndoe@example.com',
       cep: '00000000',
+      city: 'São Paulo',
       address: 'Av. Nowhere',
       whatsapp: '21999999999',
       password_hash: await hash('123456', 6),

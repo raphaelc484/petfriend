@@ -11,6 +11,7 @@ export class InMemoryUsersRepository implements UserRepository {
       name: data.name,
       email: data.email,
       cep: data.cep,
+      city: data.city,
       address: data.address,
       whatsapp: data.whatsapp,
       password_hash: data.password_hash,
@@ -40,5 +41,11 @@ export class InMemoryUsersRepository implements UserRepository {
     }
 
     return user
+  }
+
+  async findByCity(city: string) {
+    const users = this.items.filter((item) => item.city === city)
+
+    return users
   }
 }

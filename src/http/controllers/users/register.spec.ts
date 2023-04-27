@@ -17,6 +17,7 @@ describe('Register (e2e)', () => {
       email: 'johndoe@example.com',
       cep: '00000000',
       address: 'Av. Nowhere',
+      city: 'São Paulo',
       whatsapp: '21999999999',
       password: '123456',
     })

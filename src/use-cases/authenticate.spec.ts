@@ -17,6 +17,7 @@ describe('Authenticate use case', () => {
     await userRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
+      city: 'São Paulo',
       cep: '00000000',
       address: 'Av. Nowhere',
       whatsapp: '21999999999',
@@ -35,6 +36,7 @@ describe('Authenticate use case', () => {
     await userRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
+      city: 'São Paulo',
       cep: '00000000',
       address: 'Av. Nowhere',
       whatsapp: '21999999999',
@@ -53,6 +55,7 @@ describe('Authenticate use case', () => {
     await userRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
+      city: 'São Paulo',
       cep: '00000000',
       address: 'Av. Nowhere',
       whatsapp: '21999999999',
